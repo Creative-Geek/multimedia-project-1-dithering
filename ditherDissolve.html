@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+<title>Multimedia Project</title>
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!-- <script 
+         src = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js">
+      </script>
+      <link rel = "stylesheet" 
+      href = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+   <link rel = "stylesheet" 
+      href = "https://fonts.googleapis.com/icon?family=Material+Icons">	  -->
+<style>
+  /* Your existing CSS styles */
+  body {
+    background-color: #fbe2d0;
+    font-family: 'Open Sans', sans-serif;
+  }
+  .header {
+    text-align: left;
+    padding: 10px;
+    color: white;
+  }
+  .head1 {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #ca6f06;
+    color: white;
+    padding: 15px;
+    border-radius: 60px;
+  }
+  .head2 {
+    left: auto;
+    right: 20px;
+  }
+  .content {
+    opacity: 0;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 1s;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 3px solid #77380a;
+    border-radius: 20px;
+    padding: 20px;
+  }
+  .content h2 {
+    margin-bottom: 20px;
+    margin-top: 0px;
+    color: #77380a;
+  }
+  .button {
+    display: block; /* Change buttons to block elements */
+    width: 300px; /* Adjust width as needed */
+    height: 45px; /* Set the desired height */
+    background-color: #b3540f;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px auto; /* Center buttons horizontally */
+    border: none;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 18px; /* Increase the font size */
+  }
+  .button2 {
+    background-color: #b23214;
+  }
+  .button:hover {
+    background-color: #65350F;
+  }
+  .upload-icon {
+    font-size: 50px;
+    color: #77380a;
+    margin: 75px auto;
+    display: block;
+    text-align: center;
+  }
+  .back {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .back:hover {
+    background-color: #65350F;
+  }
+  .drag-drop-area {
+      width: 300px;
+      height: 200px;
+      border: 3px dotted #77380a;
+      border-radius: 20px;
+      background-color: rgba(255, 255, 255, 0.7);
+      z-index: 999;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      /*center the area*/
+      margin: 0 auto;
+  }
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #ffffff;
+    background-color: #77380a;
+    border: none;
+    border-radius: 50%;
+    padding: 5px;
+    width: 30px; /* Add a specific width */
+    height: 30px; /* Add a specific height */
+    line-height: auto; /* Center the text vertically */
+    text-align: center; /* Center the text horizontally */
+    z-index: 1000;
+  }
+  .slider {
+  -webkit-appearance: none; /* Override default CSS styles */
+  appearance: none;
+  width: 250px;
+  height: 10px;
+  border-radius: 5px;  
+  background: #e0ac87;
+  outline: none; 
+  opacity: 1; 
+  -webkit-transition: .2s; 
+  transition: opacity .2s;
+  margin: 0 auto;
+}
+
+/* .slider:hover {
+  border: 1px dotted #92250c;
+  border-radius: 5px;
+  
+} */
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #92250c; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+  border-radius: 50%; 
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #92250c; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+  border-radius: 50%; 
+}
+
+
+</style>
+</head>
+
+<body>
+  <div class="header head1 back" id="back">
+    ◄| Dither Dissolve Transition
+  </div>
+  <div class="header head1 head2">
+    Ahmed Taha Ahmed
+  </div>
+
+  <div class="content">
+    <h2>Choose two images</h2>
+    <img src="" alt="" id="myImage1" style="display: none;">
+    <div class="drag-drop-area" id="drag-drop-area-1">
+      <i class="fas fa-cloud-upload-alt upload-icon"></i>
+    </div>
+    <!--div for space-->
+    <div style="height: 15px;"></div>
+    <img src="" alt="" id="myImage2" style="display: none;">
+    <div class="drag-drop-area" id="drag-drop-area-2">
+      <i class="fas fa-cloud-upload-alt upload-icon"></i>
+    </div>
+
+    <!--div for space-->
+    <div style="height: 10px;"></div>
+    <!--slider-->
+
+    <input type="range" min="0" max="1" step="0.01" value="0.5" id="alphaSlider" class="slider" onchange="processImage()">
+
+
+    <button class="button button2" id="Start">
+      Process
+    </button>
+    <button style="display: none;" class="button button2" id="download">Download</button>
+    
+    <img src="" alt="" id="resultImage" style="display: block;">
+  
+  </div>
+  
+
+<script>
+
+
+  var refresh = 0;
+
+  // Function to handle button clicks
+  function handleButtonClick(buttonId) {
+  if (buttonId == "Start") {
+    try {
+      modifiedImage=processImage();
+      //hide the button
+      document.getElementById("Start").style.display = "none";
+    }
+    catch (error) {
+      alert("Please upload an image file.");
+    }
+  }
+  else if (buttonId == "download") {
+    modifiedImage=processImage(0);
+    downloadImage(modifiedImage);
+  }
+  }
+  
+
+  // Function to prevent default behavior for drag events
+  function preventDefaults(event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  // Add click event listener to trigger file input click
+  const dragDropArea1 = document.getElementById('drag-drop-area-1');
+  dragDropArea1.addEventListener('click', function() {
+    if (refresh == 1) {
+    //ask user if they want to refresh
+    if (confirm("You need to refresh to upload another image, refresh now?")) {
+      window.location.reload();
+    } else {
+      //stop the function
+      return;
+    }
+  }
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.style.display = 'none';
+    fileInput.addEventListener('change', handleFileSelect1);
+    document.body.appendChild(fileInput);
+    fileInput.click();
+    document.body.removeChild(fileInput);
+  });
+  function handleFileSelect1(event) {
+  const file = event.target.files[0];
+  handleFile1(file);
+}
+
+function handleDrop1(event) {
+  event.preventDefault();
+  const file = event.dataTransfer.files[0];
+  handleFile1(file);
+}
+
+const dragDropArea2 = document.getElementById('drag-drop-area-2');
+dragDropArea2.addEventListener('click', function() {
+  if (refresh == 1) {
+    //ask user if they want to refresh
+    if (confirm("You need to refresh to upload another image, refresh now?")) {
+      window.location.reload();
+    } else {
+      //stop the function
+      return;
+    }
+  }
+  const fileInput = document.createElement('input');
+  fileInput.type = 'file';
+  fileInput.accept = 'image/*';
+  fileInput.style.display = 'none';
+  fileInput.addEventListener('change', handleFileSelect2);
+  document.body.appendChild(fileInput);
+  fileInput.click();
+  document.body.removeChild(fileInput);
+});
+function handleFileSelect2(event) {
+  const file = event.target.files[0];
+  handleFile2(file);
+}
+
+function handleDrop2(event) {
+  event.preventDefault();
+  const file = event.dataTransfer.files[0];
+  handleFile2(file);
+}
+
+function createCloseButton() {
+  const closeButton = document.createElement('button');
+  closeButton.innerHTML = 'X';
+  closeButton.classList.add('close-button');
+  closeButton.addEventListener('click', function() {
+    const dragDropArea = document.getElementById('drag-drop-area');
+    dragDropArea.style.backgroundImage = '';
+    dragDropArea.style.border = '3px dotted #77380a';
+    dragDropArea.innerHTML = '<i class="fas fa-cloud-upload-alt upload-icon"></i>';
+  });
+  return closeButton;
+}
+
+function handleFile1(file) {
+  if (file && file.type.startsWith('image')) {
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      const imageSrc = event.target.result;
+      const dragDropArea = document.getElementById('drag-drop-area-1');
+      dragDropArea.style.backgroundImage = `url('${imageSrc}')`;
+      dragDropArea.style.backgroundSize = 'cover';
+      dragDropArea.style.backgroundPosition = 'center';
+      dragDropArea.innerHTML = ''; // Clear the content (remove the icon)
+      //change 'myImage1' to loaded image
+      document.getElementById('myImage1').src = imageSrc;
+      //document.getElementById('myImage1').style.display = 'block';
+      const closeButton = createCloseButton();
+      dragDropArea.appendChild(closeButton);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    alert('Please upload an image file.');
+  }
+}
+
+function handleFile2(file) {
+  if (file && file.type.startsWith('image')) {
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      const imageSrc = event.target.result;
+      const dragDropArea = document.getElementById('drag-drop-area-2');
+      dragDropArea.style.backgroundImage = `url('${imageSrc}')`;
+      dragDropArea.style.backgroundSize = 'cover';
+      dragDropArea.style.backgroundPosition = 'center';
+      dragDropArea.innerHTML = ''; // Clear the content (remove the icon)
+      //change 'myImage2' to loaded image
+      document.getElementById('myImage2').src = imageSrc;
+      //document.getElementById('myImage2').style.display = 'block';
+      const closeButton = createCloseButton();
+      dragDropArea.appendChild(closeButton);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    alert('Please upload an image file.');
+  }
+}
+
+
+// const image = document.getElementById('myImage');
+const image1 = document.getElementById('myImage1');
+const image2 = document.getElementById('myImage2');
+// Function to process the image
+function processImage(resize=1) {
+  document.getElementById("Start").style.display = "none"; //hide the button
+
+
+  const canvas1 = document.createElement('canvas');
+  const context1 = canvas1.getContext('2d');
+
+  const canvas2 = document.createElement('canvas');
+  const context2 = canvas2.getContext('2d');
+
+  const canvasResult = document.createElement('canvas');
+  const contextResult = canvasResult.getContext('2d');
+
+  // check if the two images have the same dimensions
+  if (image1.width !== image2.width || image1.height !== image2.height) {
+    alert('The two images must have the same dimensions.');
+    return;
+  }
+
+  // Set canvas dimensions to match the image
+  canvas1.width = image1.width;
+  canvas1.height = image1.height;
+
+  canvas2.width = image2.width;
+  canvas2.height = image2.height;
+
+  canvasResult.width = image1.width;
+  canvasResult.height = image1.height;
+
+  // Draw the image onto the canvas
+  context1.drawImage(image1, 0, 0, image1.width, image1.height);
+
+  context2.drawImage(image2, 0, 0, image2.width, image2.height);
+
+  contextResult.drawImage(image1, 0, 0, image1.width, image1.height);
+
+  // Get the alpha value
+  const alphaValue = document.getElementById('alphaSlider').value;
+
+  // Get the image data
+  const imageData1 = context1.getImageData(0, 0, canvas1.width, canvas1.height);
+  const imageData2 = context2.getImageData(0, 0, canvas2.width, canvas2.height);
+
+  const modifiedImageData = applyDitherDissolve(imageData1, imageData2, alphaValue); // Apply cross-dissolve
+
+  // Put the modified image data back onto the canvas
+  contextResult.putImageData(modifiedImageData, 0, 0);
+
+  // Replace the image source with the modified canvas
+  const modifiedImage = new Image();
+  modifiedImage.src = canvasResult.toDataURL();
+  modifiedImage.style.display = 'block';
+  modifiedImage.id = 'resultImage';
+ 
+  if (resize == 1){ image1.parentNode.replaceChild(modifiedImage, resultImage);
+    resultImage.style.maxWidth = '300px';}
+  else{resultImage.style.maxWidth = 'none';
+resultImage.style.display = 'none';} //remove max width and hide the image
+  refresh = 1;
+
+  // Show download button and hide process button
+  document.getElementById('download').style.display = 'block';
+
+  // Return the modified image
+  return resultImage;
+}
+
+function applyDitherDissolve(imageData1, imageData2, alphaValue) {
+  const width = imageData1.width;
+  const height = imageData1.height;
+  const data1 = imageData1.data;
+  const data2 = imageData2.data;
+  
+  const outputData = new Uint8ClampedArray(data1.length);
+
+  // Calculate the number of columns to replace
+  const columnsToReplace = Math.floor(width * alphaValue);
+
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const pixelIndex = (y * width + x) * 4;
+
+      // Check if the column is within the range to be replaced
+      if (x < columnsToReplace) {
+        // Replace pixels with data from image 2
+        outputData[pixelIndex] = data2[pixelIndex]; // Red channel
+        outputData[pixelIndex + 1] = data2[pixelIndex + 1]; // Green channel
+        outputData[pixelIndex + 2] = data2[pixelIndex + 2]; // Blue channel
+        outputData[pixelIndex + 3] = data2[pixelIndex + 3]; // Alpha channel
+      } else {
+        // Keep pixels from data of image 1
+        outputData[pixelIndex] = data1[pixelIndex]; // Red channel
+        outputData[pixelIndex + 1] = data1[pixelIndex + 1]; // Green channel
+        outputData[pixelIndex + 2] = data1[pixelIndex + 2]; // Blue channel
+        outputData[pixelIndex + 3] = data1[pixelIndex + 3]; // Alpha channel
+      }
+    }
+  }
+
+  return new ImageData(outputData, width, height);
+}
+
+
+
+
+
+
+
+function downloadImage(finalImage) {
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  const dimage = document.getElementById('resultImage');
+  canvas.width = dimage.width;
+  canvas.height = dimage.height;
+  context.drawImage(dimage, 0, 0, dimage.width, dimage.height);
+  const data = canvas.toDataURL();
+  const link = document.createElement('a');
+  link.download = 'image.png';
+  link.href = data;
+  link.click();
+}
+
+
+//////////////////////////---------------------------------------------event listeners
+
+// Add click event listeners to buttons
+const buttons = document.querySelectorAll('.button');
+buttons.forEach(button => {
+  button.addEventListener('click', function() {
+    handleButtonClick(this.id);
+  });
+});
+
+const back = document.getElementById('back');
+back.addEventListener('click', function() {
+  window.location.href = 'index.html';
+});
+
+// Add drag and drop event listeners
+const dragDropAreaElement1 = document.getElementById('drag-drop-area-1');
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+  dragDropAreaElement1.addEventListener(eventName, preventDefaults, false);
+});
+
+dragDropAreaElement1.addEventListener('drop', function(event) {
+  event.preventDefault();
+  const file = event.dataTransfer.files[0];
+  handleFile1(file);
+}, false);
+
+const dragDropAreaElement2 = document.getElementById('drag-drop-area-2');
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+  dragDropAreaElement2.addEventListener(eventName, preventDefaults, false);
+});
+
+dragDropAreaElement2.addEventListener('drop', function(event) {
+  event.preventDefault();
+  const file = event.dataTransfer.files[0];
+  handleFile2(file);
+}, false);
+
+
+//sleep for 1 second
+setTimeout(function() {const content = document.querySelector('.content');
+content.style.opacity = 1;}, 100);
+
+</script>
+</body>
+</html>
