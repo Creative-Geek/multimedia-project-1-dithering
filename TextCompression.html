@@ -124,7 +124,7 @@
 
 <body>
   <div class="header head1 back" id="back">
-    ◄| Text Compression
+    ◄| Pattern Dithering
   </div>
   <div class="header head1 head2">
     Ahmed Taha Ahmed
@@ -148,7 +148,10 @@
     <button class="button button2" id="Decode">
       Decode
     </button>
-  
+      <!--div for space-->
+      <div style="height: 10px;"></div>
+      <h5 id="compressionRatio" style="color: #4b4b4b; display:none;">Compression Ratio: </h5>
+      <h5 id="savedBits" style="color: #4b4b4b;display: none;">Saved Bits: </h5>
 
   </div>
 
@@ -187,6 +190,33 @@
     }
     var encodedText = encode(text);
     document.getElementById("text2").value = encodedText;
+    document.getElementById("compressionRatio").innerHTML = "Compression Ratio: " + compressionRatio();
+    document.getElementById("compressionRatio").style.display = "block";
+    if (savedBits() < 0) {
+      document.getElementById("savedBits").innerHTML = "Extra Bits: " + Math.abs(savedBits());}
+    else {
+      document.getElementById("savedBits").innerHTML = "Saved Bits: " + savedBits();
+    }
+      document.getElementById("savedBits").style.display = "block";
+    }
+
+  
+function savedBits(){
+  var text = document.getElementById("text").value;
+  var text2 = document.getElementById("text2").value;
+  var savedBits = (text.length*8 - text2.length*8);
+  return savedBits;
+}
+  function compressionRatio() {
+    var text = document.getElementById("text").value;
+    var text2 = document.getElementById("text2").value;
+    var ratio = text.length/text2.length;
+    //Percentage
+    ratio = ratio*100;
+    ratio = ratio.toFixed(2);
+    //percentage sign
+    ratio = ratio + "%";
+    return ratio;
   }
 
   function processText2() {
@@ -244,9 +274,14 @@
   // reset other text field on change
   document.getElementById("text").addEventListener("input", function() {
     document.getElementById("text2").value = "";
+    //hide compression ratio and saved bits
+    document.getElementById("compressionRatio").style.display = "none";
+    document.getElementById("savedBits").style.display = "none";
   });
   document.getElementById("text2").addEventListener("input", function() {
     document.getElementById("text").value = "";
+    document.getElementById("compressionRatio").style.display = "none";
+    document.getElementById("savedBits").style.display = "none";
   });
 
 
