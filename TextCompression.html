@@ -124,7 +124,7 @@
 
 <body>
   <div class="header head1 back" id="back">
-    ◄| Pattern Dithering
+    ◄| Text Compression
   </div>
   <div class="header head1 head2">
     Ahmed Taha Ahmed
@@ -134,11 +134,15 @@
     <h2>Input Text</h2>
     <h3>Text Compression using run length encoding (RLE)
     </h3>
-      <h4 style="color: #4b4b4b;">Encode:</h4>
+      <h4 style="color: #4b4b4b;">Decoded Text:</h4>
       <textarea id="text" rows="4" cols="50" style="border-radius: 10px; border: 2px solid #77380a; padding: 10px; font-size: 18px; resize: none;"></textarea>
-      <h4 style="color: #4b4b4b;">Decode:</h4>
+      <h4 style="color: #4b4b4b;">Encoded Text:</h4>
       <textarea id="text2" rows="4" cols="50" style="border-radius: 10px; border: 2px solid #77380a; padding: 10px; font-size: 18px; resize: none;"></textarea>
 
+    <!--div for space-->
+    <div style="height: 10px;"></div>
+          <h5 id="compressionRatio" style="color: #4b4b4b; display:none;">Compression Ratio: </h5>
+      <h5 id="savedBits" style="color: #4b4b4b;display: none;">Saved Bits: </h5>
     <!--div for space-->
     <div style="height: 10px;"></div>
 
@@ -148,12 +152,11 @@
     <button class="button button2" id="Decode">
       Decode
     </button>
-      <!--div for space-->
-      <div style="height: 10px;"></div>
-      <h5 id="compressionRatio" style="color: #4b4b4b; display:none;">Compression Ratio: </h5>
-      <h5 id="savedBits" style="color: #4b4b4b;display: none;">Saved Bits: </h5>
+
 
   </div>
+       <!--div for space-->
+      <div style="height: 10px;"></div>
 
 <script>
 
@@ -185,8 +188,11 @@
       return;
     }
     if (text2 != "") {
-      alert("Please clear the decode text area.");
-      return;
+      //clear text area
+      document.getElementById("text2").value = "";
+      //hide compression ratio and saved bits
+      document.getElementById("compressionRatio").style.display = "none";
+      document.getElementById("savedBits").style.display = "none";
     }
     var encodedText = encode(text);
     document.getElementById("text2").value = encodedText;
@@ -210,15 +216,16 @@ function savedBits(){
   function compressionRatio() {
     var text = document.getElementById("text").value;
     var text2 = document.getElementById("text2").value;
-    var ratio = text.length/text2.length;
-    //Percentage
-    ratio = ratio*100;
+    var ratio = text2.length / text.length;
+    // Convert ratio to percentage
+    ratio = ratio * 100;
+    // Calculate compression ratio
+    ratio = 100 - ratio;
     ratio = ratio.toFixed(2);
     //percentage sign
     ratio = ratio + "%";
     return ratio;
   }
-
   function processText2() {
     var text = document.getElementById("text").value;
     var text2 = document.getElementById("text2").value;
@@ -227,8 +234,8 @@ function savedBits(){
       return;
     }
     if (text != "") {
-      alert("Please clear the encode text area.");
-      return;
+      //clear text area
+      document.getElementById("text").value = "";
     }
     var decodedText = decode(text2);
     document.getElementById("text").value = decodedText;
