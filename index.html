@@ -66,6 +66,12 @@
   .button2 {
     background-color: #b23214;
   }
+  .button3 {
+    background-color: #21b214;
+  }
+  .button3:hover {
+    background-color: #0f6529 !important;
+  }
   .button:hover {
     background-color: #65350F;
   }
@@ -94,6 +100,7 @@
     <button class="button" id="patternDithering">Pattern Dithering</button>
     <button class="button button2" id="crossDissolve">Cross Dissolve Transition</button>
     <button class="button button2" id="ditherDissolve">Dither Dissolve Transition</button>
+    <button class="button button3" id="textCompression">Text Compression</button>
   </div>
 
 <script>
@@ -114,6 +121,9 @@ setTimeout(function() {
       window.location.href = "crossDissolve.html";
     } else if (buttonId == "ditherDissolve") {
       window.location.href = "ditherDissolve.html";
+    }
+    else if (buttonId == "textCompression") {
+      window.location.href = "TextCompression.html";
     }
   }, 100);
   }
