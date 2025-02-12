@@ -1,6 +1,6 @@
 # Multimedia Assignment
 
-This is an assignment I created for a college class.
+This is an assignment I created for a college class using html/css/js.
 
 ## Objective
 
